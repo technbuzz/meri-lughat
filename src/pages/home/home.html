@@ -1,14 +1,19 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+  <ion-toolbar color="primary">
+    <ion-searchbar (ionInput)="getItems($event)" [(ngModel)]="sourceText" debounce="3000" animated="true"></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <div padding-vertical text-center *ngIf="loading else content">
+    <ion-spinner></ion-spinner>
+  </div>
+
+  <ng-template #content>
+    <ion-list>
+      <ion-item-divider *ngIf="sourceText">{{sourceText}}</ion-item-divider>
+      <ion-item><h3 *ngFor="let result of results" dir="rtl">{{ result }}</h3></ion-item>
+    </ion-list>
+  </ng-template>
+  <!-- <button ion-button color="primary" (click)="grabPhoto()">Grab Photo</button> -->
 </ion-content>
